@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ransomware Targets Law Firm — Client Data Exposed | DCS Cyber Intelligence</title>
+  <meta name="description" content="The INC Ransom group breached Hawk Law Group, exposing client IDs, case files, and confidential legal data. Law firms are now being systematically targeted. What your firm needs to know."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0d1f3c;
+      --navy-deep:  #081428;
+      --navy-mid:   #162d52;
+      --steel:      #1e3a5f;
+      --gold:       #c8a84b;
+      --gold-light: #e8cc7a;
+      --gold-pale:  #f5e9c4;
+      --white:      #ffffff;
+      --off-white:  #f6f8fb;
+      --text:       #1c2333;
+      --text-mid:   #3d4a5c;
+      --text-muted: #6b7a8d;
+      --border:     #dce3ec;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      color: var(--text);
+      background: var(--off-white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    .site-nav {
+      background: var(--navy-deep);
+      border-bottom: 1px solid rgba(200,168,75,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+
+    .nav-logo-mark {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 20px;
+      color: var(--white);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-logo-mark span { color: var(--gold); }
+
+    .nav-logo-sub {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      border-left: 1px solid rgba(255,255,255,0.15);
+      padding-left: 10px;
+      line-height: 1.3;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold) !important;
+      color: var(--navy) !important;
+      padding: 8px 18px !important;
+    }
+
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
+
+    /* BREADCRUMB */
+    .breadcrumb-bar { background: var(--navy); padding: 10px 32px; }
+
+    .breadcrumb-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .breadcrumb-inner span { color: var(--gold); }
+
+    /* PREVIOUS BRIEF BANNER */
+    .prev-brief {
+      background: var(--navy);
+      border-bottom: 1px solid rgba(200,168,75,0.15);
+      padding: 12px 32px;
+    }
+
+    .prev-brief-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .prev-brief-text { font-size: 12px; color: rgba(255,255,255,0.5); }
+    .prev-brief-text strong { color: rgba(255,255,255,0.8); }
+
+    .prev-brief-link {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+
+    .prev-brief-link:hover { color: var(--gold-light); }
+
+    /* HERO */
+    .article-hero {
+      background: var(--navy);
+      padding: 60px 32px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.025) 39px, rgba(255,255,255,0.025) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.015) 79px, rgba(255,255,255,0.015) 80px);
+      pointer-events: none;
+    }
+
+    .article-hero::after {
+      content: '';
+      position: absolute;
+      right: -80px; top: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,168,75,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner { max-width: 820px; margin: 0 auto; position: relative; }
+
+    .hero-tags { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border: 1px solid;
+    }
+
+    .tag-alert { background: rgba(176,58,46,0.2); border-color: rgba(176,58,46,0.5); color: #e87c6e; }
+    .tag-category { background: transparent; border-color: rgba(200,168,75,0.4); color: var(--gold); }
+    .tag-urgent { background: rgba(200,168,75,0.15); border-color: rgba(200,168,75,0.5); color: var(--gold-light); }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 18px;
+      max-width: 720px;
+    }
+
+    .hero-deck {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.65;
+      max-width: 620px;
+      margin-bottom: 30px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap;
+    }
+
+    .meta-item { display: flex; flex-direction: column; gap: 3px; }
+
+    .meta-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .meta-value { font-size: 13px; color: rgba(255,255,255,0.75); }
+
+    /* ALERT STRIP */
+    .alert-strip { background: #fff8e6; border-left: 5px solid var(--gold); padding: 16px 32px; }
+
+    .alert-strip-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .alert-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+    .alert-copy { font-size: 14px; font-weight: 700; color: #7a5800; line-height: 1.5; }
+    .alert-copy span { font-weight: 400; color: #5a4000; }
+
+    /* ARTICLE BODY */
+    .article-body { max-width: 820px; margin: 0 auto; padding: 52px 32px 0; }
+
+    .body-text { font-size: 16px; line-height: 1.8; color: var(--text-mid); margin-bottom: 20px; }
+    .body-text strong { color: var(--text); font-weight: 700; }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 18px;
+      line-height: 1.3;
+    }
+
+    .rule { height: 1px; background: var(--border); margin: 44px 0; }
+
+    /* STAT ROW */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    .stat-cell { background: var(--white); padding: 24px 16px; text-align: center; }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-desc {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 32px; margin: 28px 0; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .tl-item { position: relative; margin-bottom: 28px; }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -27px; top: 6px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--off-white);
+      box-shadow: 0 0 0 2px var(--gold);
+    }
+
+    .tl-day { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
+    .tl-event { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .tl-detail { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* TAKEAWAYS */
+    .takeaway-list { list-style: none; margin: 24px 0; }
+
+    .takeaway-list li {
+      display: flex;
+      gap: 18px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .takeaway-list li:last-child { border-bottom: none; }
+
+    .tk-num {
+      flex-shrink: 0;
+      width: 30px; height: 30px;
+      background: var(--navy);
+      color: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    .tk-text { font-size: 15px; color: var(--text-mid); line-height: 1.7; }
+    .tk-text strong { color: var(--text); }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      background: var(--navy);
+      padding: 36px 40px;
+      margin: 40px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pull-quote::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 120px;
+      color: var(--gold);
+      opacity: 0.15;
+      position: absolute;
+      top: -10px; left: 18px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .pq-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+      color: var(--white);
+      line-height: 1.55;
+      font-style: italic;
+      position: relative;
+    }
+
+    .pq-attr {
+      margin-top: 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      position: relative;
+    }
+
+    /* CONTEXT BOX */
+    .context-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--navy);
+      padding: 28px 32px;
+      margin: 36px 0;
+    }
+
+    /* WARNING BOX */
+    .warning-box {
+      background: #fdf2f2;
+      border: 1px solid rgba(176,58,46,0.2);
+      border-left: 4px solid #b03a2e;
+      padding: 24px 28px;
+      margin: 32px 0;
+    }
+
+    .warning-box-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #b03a2e;
+      margin-bottom: 12px;
+    }
+
+    .warning-item {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.5;
+    }
+
+    .warning-item:last-child { margin-bottom: 0; }
+    .warning-dot { color: #b03a2e; flex-shrink: 0; font-weight: 700; }
+
+    /* DATA BOX */
+    .data-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      padding: 24px 28px;
+      margin: 32px 0;
+    }
+
+    .data-box-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .data-item {
+      display: flex;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-mid);
+      align-items: flex-start;
+      line-height: 1.5;
+    }
+
+    .data-icon { font-size: 16px; flex-shrink: 0; }
+
+    /* CTA BLOCK */
+    .cta-block {
+      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--steel) 100%);
+      padding: 56px 32px;
+      margin-top: 52px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-block::after {
+      content: '';
+      position: absolute;
+      right: -60px; bottom: -60px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,168,75,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-inner { max-width: 640px; margin: 0 auto; text-align: center; position: relative; }
+    .cta-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+
+    .cta-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 14px;
+      line-height: 1.25;
+    }
+
+    .cta-sub { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 30px; }
+    .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 15px 30px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.85);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 15px 30px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+    .cta-contact { margin-top: 22px; font-size: 13px; color: rgba(255,255,255,0.4); }
+    .cta-contact a { color: rgba(200,168,75,0.8); transition: color 0.2s; }
+    .cta-contact a:hover { color: var(--gold-light); }
+
+    /* FOOTER */
+    .site-footer { background: var(--navy-deep); padding: 48px 32px 32px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 28px;
+    }
+
+    .footer-brand .nav-logo-mark { font-size: 22px; display: block; margin-bottom: 6px; }
+    .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.65; margin-top: 10px; }
+    .footer-col-title { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    .footer-links-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links-list a { font-size: 13px; color: rgba(255,255,255,0.45); transition: color 0.2s; }
+    .footer-links-list a:hover { color: var(--gold); }
+    .footer-contact-item { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 8px; line-height: 1.5; }
+    .footer-contact-item a { color: rgba(200,168,75,0.7); transition: color 0.2s; }
+    .footer-contact-item a:hover { color: var(--gold-light); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.25); }
+    .footer-bottom-links { display: flex; gap: 20px; }
+    .footer-bottom-links a { font-size: 11px; color: rgba(255,255,255,0.3); transition: color 0.2s; }
+    .footer-bottom-links a:hover { color: var(--gold); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-inner > * { animation: fadeUp 0.55s ease both; }
+    .hero-tags  { animation-delay: 0.05s; }
+    .hero-title { animation-delay: 0.15s; }
+    .hero-deck  { animation-delay: 0.25s; }
+    .hero-meta  { animation-delay: 0.35s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .stat-row { grid-template-columns: 1fr; }
+      .data-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .pull-quote { padding: 28px 24px; }
+      .article-body { padding: 36px 20px 0; }
+      .cta-block { padding: 44px 20px; }
+      .prev-brief-inner { flex-direction: column; gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="DCS Home">
+        <span class="nav-logo-mark">DCS<span>.</span></span>
+        <span class="nav-logo-sub">Data Collaboration<br>Services Consulting</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/newsletter-ummc.html">Cyber Briefs</a></li>
+        <li><a href="https://dcs-cyber-briefs.netlify.app" class="nav-cta">Free Assessment</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-bar">
+    <div class="breadcrumb-inner">
+      <a href="/">Home</a> &nbsp;/&nbsp;
+      <a href="#">Cyber Intelligence</a> &nbsp;/&nbsp;
+      <span>Hawk Law Group Ransomware Brief</span>
+    </div>
+  </div>
+
+  <!-- PREVIOUS BRIEF BANNER -->
+  <div class="prev-brief">
+    <div class="prev-brief-inner">
+      <p class="prev-brief-text">📌 &nbsp;<strong>Missed our last brief?</strong> &nbsp;Ransomware forced a major hospital to close 35 clinics and cancel chemotherapy for 10+ days.</p>
+      <a href="/newsletter-ummc.html" class="prev-brief-link">Read Brief No. 3 →</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="article-hero" role="banner">
+    <div class="hero-inner">
+      <div class="hero-tags">
+        <span class="tag tag-alert">⚠ Direct Industry Threat</span>
+        <span class="tag tag-category">Ransomware</span>
+        <span class="tag tag-category">Legal Industry</span>
+        <span class="tag tag-urgent">⚖ Law Firms Targeted</span>
+      </div>
+      <h1 class="hero-title">Ransomware Hits a Law Firm — Client IDs, Case Files, and Confidential Legal Data Stolen and Threatened for Public Release</h1>
+      <p class="hero-deck">In January 2026, the INC Ransom group breached Hawk Law Group — a personal injury firm in Augusta, Georgia — stealing client government IDs, civil and criminal case files, and confidential legal data. The attackers publicly listed the firm and threatened to release everything unless payment was made. This is no longer a distant threat. It is targeting your industry.</p>
+      <div class="hero-meta">
+        <div class="meta-item">
+          <span class="meta-label">Incident Date</span>
+          <span class="meta-value">January 31, 2026</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Source</span>
+          <span class="meta-value">Ransomware.live / DeXpose / SharkStriker</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Read Time</span>
+          <span class="meta-value">4 minutes</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Brief No.</span>
+          <span class="meta-value">Issue 04 — March 2026</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ALERT STRIP -->
+  <div class="alert-strip" role="note">
+    <div class="alert-strip-inner">
+      <span class="alert-icon">⚖️</span>
+      <p class="alert-copy">
+        Industry Alert: &nbsp;<span>This attack targeted a law firm specifically. Client government IDs, case files, and privileged legal communications were stolen. Three law firms were listed as victims by the same ransomware group in the same week. Your firm's data is exactly what attackers are after.</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- ARTICLE BODY -->
+  <main class="article-body" id="main-content">
+
+    <p class="section-label">Incident Overview</p>
+    <h2 class="section-heading">What Happened to Hawk Law Group</h2>
+
+    <p class="body-text">On January 31, 2026, the ransomware group INC Ransom — also known as Incransom — breached the systems of Hawk Law Group, a personal injury law firm based in Augusta, Georgia, with over 71 years of legal experience serving clients across the Central Savannah River Area. The breach was discovered and publicly listed on February 1st, when the attackers posted the firm on their dark web leak site and issued a direct threat: <strong>pay up, or the stolen data gets released to the public.</strong></p>
+
+    <p class="body-text">What was stolen makes this incident particularly alarming for any law firm: client government-issued IDs, civil and criminal case files, litigation-related forms, and what cybersecurity analysts described as potentially privileged client communications. As of late February 2026, Hawk Law Group had made no public statement acknowledging the breach — leaving clients with no official notification that their most sensitive legal and personal information may have been compromised.</p>
+
+    <p class="body-text">This was not an isolated incident. In the same week, INC Ransom also listed <strong>two other law firms</strong> as victims on its leak site — Eisenberg Lowrance Lundell Lofgren and PK Pinhão & Koiffman Attorneys at Law — making clear that legal practices are being systematically targeted, not randomly selected.</p>
+
+    <!-- STATS -->
+    <div class="stat-row" role="group" aria-label="Incident statistics">
+      <div class="stat-cell">
+        <div class="stat-number">3</div>
+        <div class="stat-desc">Law Firms Targeted<br>In One Week</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number">71+</div>
+        <div class="stat-desc">Years in Practice<br>— No Protection</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number">0</div>
+        <div class="stat-desc">Public Statements<br>From the Firm</div>
+      </div>
+    </div>
+
+    <!-- DATA EXPOSED BOX -->
+    <div class="data-box">
+      <p class="data-box-title">📁 Data Reportedly Stolen in This Attack</p>
+      <div class="data-grid">
+        <div class="data-item"><span class="data-icon">🪪</span><span>Client government-issued IDs and identification documents</span></div>
+        <div class="data-item"><span class="data-icon">⚖️</span><span>Civil and criminal litigation case files</span></div>
+        <div class="data-item"><span class="data-icon">📄</span><span>Legal forms and case-related documentation</span></div>
+        <div class="data-item"><span class="data-icon">🔒</span><span>Potentially privileged client communications</span></div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <p class="section-label">Event Sequence</p>
+    <h2 class="section-heading">How the Attack Unfolded</h2>
+
+    <div class="timeline" role="list">
+      <div class="tl-item" role="listitem">
+        <div class="tl-day">January 31, 2026 — Breach</div>
+        <div class="tl-event">INC Ransom Infiltrates Hawk Law Group Systems</div>
+        <div class="tl-detail">The ransomware group gained unauthorized access to the firm's systems, exfiltrating client data including government IDs, case files, and confidential legal documents. The firm did not publicly acknowledge the breach at this time.</div>
+      </div>
+      <div class="tl-item" role="listitem">
+        <div class="tl-day">February 1, 2026 — Public Listing</div>
+        <div class="tl-event">Firm Listed on Dark Web Leak Site — Ransom Demanded</div>
+        <div class="tl-detail">INC Ransom posted Hawk Law Group on their public leak site, warning that the full data leak would be published unless a representative contacted them to negotiate. Two other law firms were listed the same week.</div>
+      </div>
+      <div class="tl-item" role="listitem">
+        <div class="tl-day">February 23, 2026 — No Response</div>
+        <div class="tl-event">Firm Still Listed — No Public Statement Issued</div>
+        <div class="tl-detail">Nearly four weeks after the breach, Hawk Law Group had issued no public statement, filed no regulatory notices, and made no acknowledgment on its website. Clients had received no official notification. The firm remained listed on the attacker's leak site.</div>
+      </div>
+    </div>
+
+    <!-- PULL QUOTE -->
+    <blockquote class="pull-quote">
+      <p class="pq-text">The full leak will be published soon, unless a company representative contacts us.</p>
+      <p class="pq-attr">— INC Ransom Group, Dark Web Leak Site, February 1, 2026</p>
+    </blockquote>
+
+    <!-- WARNING BOX -->
+    <div class="warning-box">
+      <p class="warning-box-title">⚠ Law Firms Are Being Systematically Targeted</p>
+      <div class="warning-item"><span class="warning-dot">▸</span><span><strong>Hawk Law Group, GA (Jan 2026):</strong> Client IDs, case files, and privileged communications stolen — no public disclosure</span></div>
+      <div class="warning-item"><span class="warning-dot">▸</span><span><strong>Eisenberg Lowrance Lundell Lofgren (Feb 2026):</strong> Listed by INC Ransom the same week as Hawk Law Group</span></div>
+      <div class="warning-item"><span class="warning-dot">▸</span><span><strong>PK Pinhão & Koiffman Attorneys at Law (Jan 2026):</strong> Third law firm targeted by INC Ransom in the same period</span></div>
+      <div class="warning-item"><span class="warning-dot">▸</span><span><strong>Why law firms?</strong> Client medical records, financial information, government IDs, privileged communications, and litigation strategies — all in one place, all extremely valuable to attackers</span></div>
+      <div class="warning-item"><span class="warning-dot">▸</span><span><strong>Double extortion:</strong> INC Ransom doesn't just lock files — it steals data first, then threatens public release. Having backups does not protect against this tactic</span></div>
+    </div>
+
+    <div class="rule"></div>
+
+    <p class="section-label">Executive Takeaways</p>
+    <h2 class="section-heading">5 Things Every Law Firm Must Understand Right Now</h2>
+
+    <ul class="takeaway-list">
+      <li>
+        <div class="tk-num">1</div>
+        <div class="tk-text"><strong>Law firms are high-value targets — not incidental victims.</strong> Attackers go where the data is most sensitive and most valuable. Client IDs, case files, medical records, financial information, and privileged communications make law firms one of the most attractive targets in any sector.</div>
+      </li>
+      <li>
+        <div class="tk-num">2</div>
+        <div class="tk-text"><strong>Backups are no longer enough.</strong> INC Ransom uses double extortion — stealing data before deploying ransomware. Even if you restore your systems from backup, the stolen data can still be leaked publicly. The threat doesn't end when your systems come back online.</div>
+      </li>
+      <li>
+        <div class="tk-num">3</div>
+        <div class="tk-text"><strong>Silence after a breach creates its own crisis.</strong> Hawk Law Group made no public statement for weeks. In that vacuum, clients had no way to protect themselves from identity theft, fraud, or exposure of their legal strategy. Transparency and rapid client notification are both an ethical obligation and a trust-preservation strategy.</div>
+      </li>
+      <li>
+        <div class="tk-num">4</div>
+        <div class="tk-text"><strong>71 years of reputation can be undone overnight.</strong> Hawk Law Group has over seven decades of service to its community. A single breach — handled poorly — can erase that goodwill permanently. Cybersecurity is now as fundamental to a firm's reputation as its courtroom record.</div>
+      </li>
+      <li>
+        <div class="tk-num">5</div>
+        <div class="tk-text"><strong>Your clients' data is your responsibility — legally and ethically.</strong> Bar associations increasingly treat cybersecurity as a professional competence requirement. A breach of client confidential information is not just a technology failure — it is a potential ethical violation with regulatory consequences.</div>
+      </li>
+    </ul>
+
+    <div class="rule"></div>
+
+    <p class="section-label">What This Means for Your Organization</p>
+    <h2 class="section-heading">Four Briefs. Four Sectors. One Unavoidable Conclusion.</h2>
+
+    <p class="body-text">Over the past four briefs we have covered a school district, a county government, a hospital system, and now a law firm. Different organizations. Different states. Different sectors. <strong>The same attackers. The same tactics. The same devastating results.</strong></p>
+
+    <p class="body-text">The INC Ransom group alone targeted three law firms in a single week. They are not waiting for firms to grow large enough to be worth targeting. They are targeting any firm that holds valuable data and lacks the defenses to stop them. A 71-year-old firm with deep community roots was not too established to be attacked. <strong>No firm is.</strong></p>
+
+    <div class="context-box">
+      <p class="section-label">DCS Perspective</p>
+      <p class="body-text" style="margin-bottom:0;">The Hawk Law Group attack is the most directly relevant incident we have covered for law firms and professional services clients. Your client files, your case data, your privileged communications — these are exactly what ransomware groups are targeting. DCS works specifically with professional services firms to assess their exposure and implement practical protections before an attack forces the issue. Start with our free Security Risk Assessment — it takes under 10 minutes and gives you an honest picture of where you stand.</p>
+    </div>
+
+  </main>
+
+  <!-- CTA BLOCK -->
+  <section class="cta-block" aria-label="Call to action">
+    <div class="cta-inner">
+      <p class="cta-eyebrow">Free for Qualified Businesses</p>
+      <h2 class="cta-heading">Is Your Firm's Client Data Protected Against Double Extortion?</h2>
+      <p class="cta-sub">DCS offers a no-cost Security Risk Assessment built for professional services firms. Identify your most critical vulnerabilities in under 10 minutes — before an attacker finds them first.</p>
+      <div class="cta-buttons">
+        <a href="https://dcs-cyber-briefs.netlify.app" class="btn-primary">Take the Free Assessment</a>
+        <a href="mailto:kwalton@datacollaborationservices.com" class="btn-secondary">Talk to an Advisor</a>
+      </div>
+      <p class="cta-contact">
+        Questions? &nbsp;
+        <a href="mailto:kwalton@datacollaborationservices.com">kwalton@datacollaborationservices.com</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="tel:8009227994">800-922-7994</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="nav-logo-mark">DCS<span>.</span></span>
+          <p>Data Collaboration Services Consulting is a Managed Services Provider helping businesses protect their data, optimize operations, and respond to emerging cyber threats.</p>
+        </div>
+        <div>
+          <p class="footer-col-title">Cyber Intelligence Briefs</p>
+          <ul class="footer-links-list">
+            <li><a href="/newsletter-ransomware.html">Brief No. 1 — Minersville Ransomware</a></li>
+            <li><a href="/newsletter-passaic.html">Brief No. 2 — Passaic County Malware</a></li>
+            <li><a href="/newsletter-ummc.html">Brief No. 3 — UMMC Hospital Ransomware</a></li>
+            <li><a href="/newsletter-lawfirm.html" style="color:var(--gold);">Brief No. 4 — Hawk Law Group Attack ←</a></li>
+          </ul>
+          <br/>
+          <p class="footer-col-title">Quick Links</p>
+          <ul class="footer-links-list">
+            <li><a href="https://dcs-cyber-briefs.netlify.app/">Home</a></li>
+            <li><a href="https://dcs-cyber-briefs.netlify.app">Free Risk Assessment</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Contact DCS</p>
+          <p class="footer-contact-item"><a href="mailto:kwalton@datacollaborationservices.com">kwalton@datacollaborationservices.com</a></p>
+          <p class="footer-contact-item"><a href="tel:8009227994">800-922-7994</a></p>
+          <p class="footer-contact-item" style="margin-top:12px; font-size:12px;">Managed IT &amp; Cybersecurity<br>for Professional Services Firms</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Data Collaboration Services Consulting. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Unsubscribe</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
