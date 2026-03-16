@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DCS Cyber Brief No. 5 — LexisNexis Data Breach</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f6f8fb; font-family: 'Lato', sans-serif; color: #1a1a2e; }
+
+    /* NAV */
+    nav {
+      background: #0d1f3c;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; }
+    .nav-logo img { height: 36px; }
+    .nav-brand {
+      font-family: 'Lato', sans-serif;
+      font-size: 13px; font-weight: 900;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #c8a84b;
+    }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(246,248,251,0.7);
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: #c8a84b; }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      background: #f0f2f5;
+      padding: 10px 32px;
+      border-bottom: 1px solid #dde1e8;
+    }
+    .breadcrumb a, .breadcrumb span {
+      font-size: 12px; color: #666; text-decoration: none;
+    }
+    .breadcrumb a:hover { color: #0d1f3c; }
+    .breadcrumb .sep { margin: 0 6px; color: #999; }
+
+    /* HERO */
+    .hero {
+      background: #0d1f3c;
+      padding: 72px 32px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,168,75,0.1);
+      top: -150px; right: -100px;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,168,75,0.08);
+      top: -60px; right: -20px;
+    }
+    .hero-inner { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero-top {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .hero-series {
+      font-size: 11px; font-weight: 900;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(200,168,75,0.6);
+    }
+    .hero-issue {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(200,168,75,0.5);
+      border: 1px solid rgba(200,168,75,0.3);
+      padding: 4px 10px; border-radius: 3px;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(200,168,75,0.65);
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 900; line-height: 1.1;
+      color: #f6f8fb;
+      margin-bottom: 20px;
+    }
+    .hero h1 em { color: #c8a84b; font-style: normal; }
+    .hero-divider {
+      width: 48px; height: 3px;
+      background: #c8a84b; margin-bottom: 20px;
+    }
+    .hero-sub {
+      font-size: 16px; line-height: 1.65;
+      color: rgba(246,248,251,0.72);
+      max-width: 600px;
+    }
+    .hero-meta {
+      margin-top: 32px;
+      display: flex; gap: 24px; flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(200,168,75,0.55);
+    }
+
+    /* ALERT STRIP */
+    .alert-strip {
+      background: #c0392b;
+      padding: 12px 32px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .alert-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%; background: #fff;
+      flex-shrink: 0; animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .alert-text {
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: #fff;
+    }
+
+    /* BODY */
+    .body-wrap { max-width: 760px; margin: 0 auto; padding: 52px 32px; }
+
+    .section-label {
+      font-size: 10px; font-weight: 900;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: #c8a84b;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 700;
+      color: #0d1f3c;
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+    p {
+      font-size: 16px; line-height: 1.75;
+      color: #2c2c3e; margin-bottom: 20px;
+    }
+    .divider {
+      width: 48px; height: 3px;
+      background: #c8a84b; margin: 32px 0;
+    }
+
+    /* HIGHLIGHT BOX */
+    .highlight-box {
+      background: #0d1f3c;
+      border-left: 4px solid #c8a84b;
+      padding: 24px 28px;
+      border-radius: 4px;
+      margin: 32px 0;
+    }
+    .highlight-box p {
+      color: rgba(246,248,251,0.85);
+      margin-bottom: 0;
+      font-size: 15px;
+      font-style: italic;
+    }
+    .highlight-box .quote-attr {
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(200,168,75,0.7);
+      margin-top: 12px; font-style: normal;
+    }
+
+    /* STAT CARDS */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .stat-card {
+      background: #0d1f3c;
+      border-radius: 6px;
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px; font-weight: 900;
+      color: #c8a84b;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(246,248,251,0.6);
+    }
+
+    /* KEY TAKEAWAYS */
+    .takeaway-list { list-style: none; margin: 20px 0; }
+    .takeaway-list li {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid #e8eaf0;
+      font-size: 15px; line-height: 1.6; color: #2c2c3e;
+    }
+    .takeaway-list li:last-child { border-bottom: none; }
+    .takeaway-icon {
+      width: 28px; height: 28px; flex-shrink: 0;
+      background: #c8a84b; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 900; color: #0d1f3c;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: #0d1f3c;
+      padding: 52px 32px;
+    }
+    .cta-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+    .cta-eyebrow {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(200,168,75,0.6);
+      margin-bottom: 12px;
+    }
+    .cta-inner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px; font-weight: 900;
+      color: #f6f8fb; margin-bottom: 16px;
+    }
+    .cta-inner p {
+      font-size: 16px; color: rgba(246,248,251,0.7);
+      max-width: 520px; margin: 0 auto 32px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: #c8a84b; color: #0d1f3c;
+      font-size: 13px; font-weight: 900;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 16px 36px; border-radius: 4px;
+      text-decoration: none;
+      margin-bottom: 16px;
+    }
+    .cta-btn:hover { background: #d4b55e; }
+    .cta-contact {
+      font-size: 13px; color: rgba(246,248,251,0.5);
+      margin-top: 12px;
+    }
+    .cta-contact a { color: #c8a84b; text-decoration: none; }
+
+    /* PREV BRIEF */
+    .prev-brief {
+      background: #f0f2f5;
+      border-top: 3px solid #c8a84b;
+      padding: 24px 32px;
+    }
+    .prev-brief-inner { max-width: 760px; margin: 0 auto; }
+    .prev-brief p {
+      font-size: 13px; color: #666; margin-bottom: 6px;
+    }
+    .prev-brief a {
+      font-size: 15px; font-weight: 700;
+      color: #0d1f3c; text-decoration: none;
+    }
+    .prev-brief a:hover { color: #c8a84b; }
+
+    /* FOOTER */
+    footer {
+      background: #0d1f3c;
+      padding: 32px;
+      text-align: center;
+      border-top: 3px solid #c8a84b;
+    }
+    footer p {
+      font-size: 12px; color: rgba(246,248,251,0.4);
+      margin-bottom: 6px;
+    }
+    footer a { color: #c8a84b; text-decoration: none; }
+    .footer-divider {
+      width: 32px; height: 2px;
+      background: rgba(200,168,75,0.3);
+      margin: 16px auto;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-brand">DCS Cyber Briefs</div>
+  </div>
+  <div class="nav-links">
+    <a href="https://dcs-cyber-briefs.netlify.app">All Briefs</a>
+    <a href="https://dcs-security-assessment.netlify.app">Free Assessment</a>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="https://dcs-cyber-briefs.netlify.app">Home</a>
+  <span class="sep">›</span>
+  <a href="https://dcs-cyber-briefs.netlify.app">Cyber Briefs</a>
+  <span class="sep">›</span>
+  <span>Issue 05 — LexisNexis Data Breach</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="hero-series">DCS Cyber Briefs</div>
+      <div class="hero-issue">Issue 05</div>
+    </div>
+    <div class="hero-eyebrow">Legal Research Platform Breach — March 2026</div>
+    <h1>The tool every<br>law firm trusts<br>was <em>hacked.</em></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">LexisNexis — the platform that nearly every law firm, court, and government agency in America uses every day — confirmed a data breach in March 2026. Hackers accessed millions of records, including credentials tied to federal judges, DOJ attorneys, and law firm accounts. Here's what happened, and what it means for your firm.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">Published March 2026</div>
+      <div class="hero-meta-item">5 min read</div>
+      <div class="hero-meta-item">Data Collaboration Services Consulting</div>
+    </div>
+  </div>
+</div>
+
+<!-- ALERT STRIP -->
+<div class="alert-strip">
+  <div class="alert-dot"></div>
+  <div class="alert-text">Active Security Alert — Law Firm Accounts Exposed</div>
+</div>
+
+<!-- BODY -->
+<div class="body-wrap">
+
+  <div class="section-label">What Happened</div>
+  <h2>Hackers Breached LexisNexis and Accessed Millions of Records</h2>
+  <p>On February 24, 2026, a threat actor calling itself FulcrumSec exploited an unpatched vulnerability in a LexisNexis React frontend application — a flaw that had reportedly been left unaddressed for months. Once inside, the attackers accessed hundreds of database tables, AWS secrets, employee password hashes, and millions of internal records.</p>
+  <p>By March 3, FulcrumSec publicly posted a manifesto and a link to more than 3.9 million internal records allegedly taken from LexisNexis's AWS infrastructure. The stolen data reportedly included credentials and profile data tied to roughly 400,000 users — including accounts belonging to federal judges, U.S. Department of Justice attorneys, SEC staff, law firms, insurance companies, and universities.</p>
+
+  <div class="highlight-box">
+    <p>"The company that indexes the world's legal information could not index its own IAM policies."</p>
+    <div class="quote-attr">— FulcrumSec, the threat actor responsible for the breach</div>
+  </div>
+
+  <p>Among the most damaging claims: the hackers said the password "Lexis1234" had been reused five different times across the organization. FulcrumSec attempted to contact LexisNexis — most likely seeking a ransom — but the company refused to engage.</p>
+
+  <div class="divider"></div>
+
+  <div class="section-label">By the Numbers</div>
+  <h2>The Scale of This Breach</h2>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-number">3.9M</div>
+      <div class="stat-label">Internal records exposed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">400K</div>
+      <div class="stat-label">User profiles compromised</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">100+</div>
+      <div class="stat-label">.gov accounts accessed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">5×</div>
+      <div class="stat-label">Times "Lexis1234" was reused</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">LexisNexis's Response</div>
+  <h2>What the Company Said</h2>
+  <p>LexisNexis confirmed the breach but characterized the accessed data as "mostly legacy, deprecated data from prior to 2020," including customer names, user IDs, business contact information, products used, and support tickets. The company stated that Social Security numbers, financial data, active passwords, and client search queries were not exposed.</p>
+  <p>LexisNexis engaged a third-party cybersecurity forensics firm, notified law enforcement, and said the matter has been contained. They have also begun notifying affected current and previous customers.</p>
+  <p>However, security researchers have warned that the combination of exposed government user data and enterprise credentials could fuel sophisticated phishing and social engineering attacks against law firms long after the initial breach is contained.</p>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Why This Matters for Your Firm</div>
+  <h2>Every Law Firm That Uses LexisNexis Is at Risk</h2>
+  <p>LexisNexis is not a peripheral tool — it is core infrastructure for legal research across tens of thousands of law firms. If your firm uses LexisNexis, your account credentials, business contact information, and usage data may have been exposed.</p>
+  <p>Even if your direct login was not compromised, the exposed data creates downstream risk. Criminals with access to law firm account records can craft highly convincing phishing emails, impersonate LexisNexis support, or target partners and associates with tailored social engineering attacks — using real account details to appear legitimate.</p>
+  <p>This breach also highlights a pattern: this is LexisNexis's second major security incident in recent history. In 2025, a separate breach exposed Social Security numbers belonging to over 364,000 individuals from a platform used by LexisNexis Risk Solutions.</p>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Action Steps</div>
+  <h2>What Your Firm Should Do Right Now</h2>
+
+  <ul class="takeaway-list">
+    <li>
+      <div class="takeaway-icon">1</div>
+      <div><strong>Reset your LexisNexis credentials immediately.</strong> Change your password and enable multi-factor authentication if you haven't already. Do not reuse passwords across platforms.</div>
+    </li>
+    <li>
+      <div class="takeaway-icon">2</div>
+      <div><strong>Brief your team on phishing risk.</strong> Warn staff that criminals may now contact them impersonating LexisNexis support using real account details. Verify any unusual requests by calling official numbers directly.</div>
+    </li>
+    <li>
+      <div class="takeaway-icon">3</div>
+      <div><strong>Audit your third-party vendor access.</strong> Review all the platforms your firm relies on — not just LexisNexis. Each vendor is a potential attack surface. Ensure they have robust security practices in place.</div>
+    </li>
+    <li>
+      <div class="takeaway-icon">4</div>
+      <div><strong>Get a security assessment.</strong> If you don't know your firm's current exposure across all platforms, now is the time to find out. A free security risk assessment takes 10 minutes and could save you millions.</div>
+    </li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <div class="section-label">The Bottom Line</div>
+  <h2>If You Trust a Platform, You Share Its Risk</h2>
+  <p>The LexisNexis breach is a stark reminder that your firm's security is only as strong as the tools you rely on. When a vendor is breached, your data — and your clients' trust — can be compromised without your knowledge or consent.</p>
+  <p>Law firms hold some of the most sensitive information in existence: privileged communications, financial records, trade secrets, personal data. That makes them high-value targets, not just directly, but through the vendors they use every day.</p>
+  <p>The question is not whether a breach will affect your firm. The question is whether you'll know about it in time to act — and whether you have the defenses in place to limit the damage.</p>
+
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-eyebrow">Free — No Obligation</div>
+    <h2>How Exposed Is Your Firm?</h2>
+    <p>Take our free 10-minute security risk assessment and find out exactly where your vulnerabilities are — before an attacker does.</p>
+    <a href="https://dcs-security-assessment.netlify.app" class="cta-btn">Get Your Free Assessment</a>
+    <div class="cta-contact">
+      Questions? Contact Kenneth Walton directly:<br>
+      <a href="mailto:kwalton@datacollaborationservices.com">kwalton@datacollaborationservices.com</a> &nbsp;|&nbsp;
+      <a href="tel:8009227994">800-922-7994</a>
+    </div>
+  </div>
+</div>
+
+<!-- PREV BRIEF -->
+<div class="prev-brief">
+  <div class="prev-brief-inner">
+    <p>← Previous Brief</p>
+    <a href="https://dcs-cyber-briefs.netlify.app/newsletter-hawk-law.html">Issue 04 — Hawk Law Group Data Breach: Client Files Exposed</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong style="color:rgba(246,248,251,0.7)">Data Collaboration Services Consulting</strong></p>
+  <div class="footer-divider"></div>
+  <p>Managed IT &amp; Cybersecurity Services for Law Firms &amp; Professional Services</p>
+  <p><a href="mailto:kwalton@datacollaborationservices.com">kwalton@datacollaborationservices.com</a> &nbsp;|&nbsp; <a href="tel:8009227994">800-922-7994</a></p>
+  <div class="footer-divider"></div>
+  <p><a href="https://dcs-cyber-briefs.netlify.app">← Back to All Cyber Briefs</a></p>
+</footer>
+
+</body>
+</html>
