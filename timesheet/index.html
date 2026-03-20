@@ -15,6 +15,7 @@
       --gold2: #f0c96a;
       --green: #22c55e;
       --red: #ef4444;
+      --blue: #3b82f6;
       --text: #e8e4d9;
       --muted: #6b7fa3;
       --border: rgba(212,168,67,0.18);
@@ -155,9 +156,11 @@
 
     .tab.in::before  { background: rgba(34,197,94,0.08); }
     .tab.out::before { background: rgba(239,68,68,0.08); }
+    .tab.off::before { background: rgba(59,130,246,0.08); }
 
     .tab.active.in  { border-color: var(--green); }
     .tab.active.out { border-color: var(--red); }
+    .tab.active.off { border-color: var(--blue); }
     .tab.active::before { opacity: 1; }
 
     .tab-icon {
@@ -175,6 +178,7 @@
 
     .tab.active.in  .tab-label { color: var(--green); }
     .tab.active.out .tab-label { color: var(--red); }
+    .tab.active.off .tab-label { color: var(--blue); }
     .tab:not(.active) .tab-label { color: var(--muted); }
 
     /* ── Card ── */
@@ -319,6 +323,9 @@
 
     .btn-out { background: var(--red); color: #fff; }
     .btn-out:hover:not(:disabled) { background: #dc2626; }
+
+    .btn-off { background: var(--blue); color: #fff; }
+    .btn-off:hover:not(:disabled) { background: #2563eb; }
 
     .btn-default { background: var(--gold); color: #0a0f1a; }
     .btn-default:hover:not(:disabled) { background: var(--gold2); }
@@ -488,7 +495,7 @@
   </div>
 
   <!-- Action selector -->
-  <div class="action-tabs">
+  <div class="action-tabs" style="grid-template-columns: 1fr 1fr 1fr;">
     <div class="tab in active" onclick="setAction('in')" id="tab-in">
       <div class="tab-icon">▶</div>
       <div class="tab-label">Clock In</div>
@@ -496,6 +503,10 @@
     <div class="tab out" onclick="setAction('out')" id="tab-out">
       <div class="tab-icon">■</div>
       <div class="tab-label">Clock Out</div>
+    </div>
+    <div class="tab off" onclick="setAction('off')" id="tab-off">
+      <div class="tab-icon">📅</div>
+      <div class="tab-label">Time Off</div>
     </div>
   </div>
 
@@ -539,6 +550,34 @@
           <input type="text" id="collaborators" placeholder="e.g. Lee Rice, Sarah (client), solo..." />
         </div>
 
+        <!-- Time Off fields -->
+        <div class="form-group" id="timeoff-type-group" style="display:none;">
+          <label>Type of Leave</label>
+          <select id="timeoff-type">
+            <option value="">Select type...</option>
+            <option value="Vacation">Vacation</option>
+            <option value="Sick Day">Sick Day</option>
+            <option value="Personal Day">Personal Day</option>
+            <option value="Holiday">Holiday</option>
+            <option value="Unpaid Leave">Unpaid Leave</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="timeoff-start-group" style="display:none;">
+          <label>Start Date</label>
+          <input type="date" id="timeoff-start" />
+        </div>
+
+        <div class="form-group" id="timeoff-end-group" style="display:none;">
+          <label>End Date</label>
+          <input type="date" id="timeoff-end" />
+        </div>
+
+        <div class="form-group" id="timeoff-notes-group" style="display:none;">
+          <label>Notes (Optional)</label>
+          <textarea id="timeoff-notes" placeholder="Any additional details about your time off request..."></textarea>
+        </div>
+
         <div class="divider"></div>
 
         <button type="submit" class="btn btn-in" id="submit-btn">
@@ -570,6 +609,7 @@
   // ─── CONFIG — replace these with your actual URLs ────────────────────────
   const CLOCKIN_WEBHOOK  = 'https://default03dae46ea65944bca6c975d003ddb8.ac.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d88d5fa17d0e4a7cbebe08610e33a796/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=7JM5Gr26i-ru30kcxzf0AcYPRdA2xPfhR5U9qXsIZxU';
   const CLOCKOUT_WEBHOOK = 'https://default03dae46ea65944bca6c975d003ddb8.ac.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/3dd3009897da4718981bc10a9b1fac65/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=hbLFAMSM2VMKE4Ru1-4WRCPKiVhEx0-8-U1jHTv7gqo';
+  const TIMEOFF_WEBHOOK  = 'YOUR_TIMEOFF_POWER_AUTOMATE_WEBHOOK_URL';
   // ─────────────────────────────────────────────────────────────────────────
 
   let currentAction = 'in';
@@ -588,24 +628,36 @@
   tick();
   setInterval(tick, 1000);
 
-  // Switch clock-in / clock-out
+  // Switch clock-in / clock-out / time-off
   function setAction(action) {
     currentAction = action;
-    const isIn = action === 'in';
+    const isIn  = action === 'in';
+    const isOut = action === 'out';
+    const isOff = action === 'off';
 
-    document.getElementById('tab-in').className  = 'tab in'  + (isIn ? ' active' : '');
-    document.getElementById('tab-out').className = 'tab out' + (!isIn ? ' active' : '');
+    document.getElementById('tab-in').className  = 'tab in'  + (isIn  ? ' active' : '');
+    document.getElementById('tab-out').className = 'tab out' + (isOut ? ' active' : '');
+    document.getElementById('tab-off').className = 'tab off' + (isOff ? ' active' : '');
 
     const accent = document.getElementById('card-accent');
-    accent.className = 'card-accent ' + (isIn ? 'green' : 'red');
+    accent.className = 'card-accent ' + (isIn ? 'green' : isOut ? 'red' : 'blue');
 
-    document.getElementById('stamp-label').textContent = isIn ? 'Clocking in at' : 'Clocking out at';
-    document.getElementById('summary-group').style.display = isIn ? 'none' : 'block';
-    document.getElementById('collab-group').style.display  = isIn ? 'none' : 'block';
+    document.getElementById('stamp-label').textContent = isIn ? 'Clocking in at' : isOut ? 'Clocking out at' : 'Requesting time off';
+
+    // Show/hide clock stamp
+    document.querySelector('.clock-stamp').style.display = isOff ? 'none' : 'flex';
+
+    // Show/hide fields
+    document.getElementById('summary-group').style.display       = isOut ? 'block' : 'none';
+    document.getElementById('collab-group').style.display        = isOut ? 'block' : 'none';
+    document.getElementById('timeoff-type-group').style.display  = isOff ? 'block' : 'none';
+    document.getElementById('timeoff-start-group').style.display = isOff ? 'block' : 'none';
+    document.getElementById('timeoff-end-group').style.display   = isOff ? 'block' : 'none';
+    document.getElementById('timeoff-notes-group').style.display = isOff ? 'block' : 'none';
 
     const btn = document.getElementById('submit-btn');
-    btn.className = 'btn ' + (isIn ? 'btn-in' : 'btn-out');
-    document.getElementById('btn-text').textContent = isIn ? '▶ \u00a0Clock In Now' : '■ \u00a0Clock Out Now';
+    btn.className = 'btn ' + (isIn ? 'btn-in' : isOut ? 'btn-out' : 'btn-off');
+    document.getElementById('btn-text').textContent = isIn ? '▶ \u00a0Clock In Now' : isOut ? '■ \u00a0Clock Out Now' : '📅 \u00a0Submit Time Off Request';
   }
 
   // Toast
@@ -628,12 +680,13 @@
   document.getElementById('timesheet-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const name    = document.getElementById('name').value.trim();
-    const project = document.getElementById('project').value.trim();
+    const name          = document.getElementById('name').value.trim();
+    const project       = document.getElementById('project').value.trim();
     const notes         = document.getElementById('notes').value.trim();
     const collaborators = document.getElementById('collaborators').value.trim();
-    const now     = new Date().toISOString();
-    const isIn    = currentAction === 'in';
+    const now           = new Date().toISOString();
+    const isIn          = currentAction === 'in';
+    const isOff         = currentAction === 'off';
 
     const btn  = document.getElementById('submit-btn');
     const spin = document.getElementById('spinner');
@@ -643,17 +696,45 @@
     spin.style.display = 'block';
     txt.textContent = 'Submitting...';
 
-    const payload = {
-      action: isIn ? 'CLOCK_IN' : 'CLOCK_OUT',
-      engineer_name: name,
-      project,
-      timestamp: now,
-      timestamp_local: fmt(now),
-      notes: isIn ? '' : notes,
-      collaborators: isIn ? '' : collaborators
-    };
+    let payload, webhookUrl;
 
-    const webhookUrl = isIn ? CLOCKIN_WEBHOOK : CLOCKOUT_WEBHOOK;
+    if (isOff) {
+      const leaveType  = document.getElementById('timeoff-type').value;
+      const startDate  = document.getElementById('timeoff-start').value;
+      const endDate    = document.getElementById('timeoff-end').value;
+      const offNotes   = document.getElementById('timeoff-notes').value.trim();
+
+      if (!leaveType || !startDate || !endDate) {
+        toast('Please fill in all required fields.', 'err');
+        btn.disabled = false;
+        spin.style.display = 'none';
+        txt.textContent = '📅 \u00a0Submit Time Off Request';
+        return;
+      }
+
+      payload = {
+        action: 'TIME_OFF_REQUEST',
+        engineer_name: name,
+        leave_type: leaveType,
+        start_date: startDate,
+        end_date: endDate,
+        notes: offNotes,
+        submitted_at: now,
+        timestamp_local: fmt(now)
+      };
+      webhookUrl = TIMEOFF_WEBHOOK;
+    } else {
+      payload = {
+        action: isIn ? 'CLOCK_IN' : 'CLOCK_OUT',
+        engineer_name: name,
+        project,
+        timestamp: now,
+        timestamp_local: fmt(now),
+        notes: isIn ? '' : notes,
+        collaborators: isIn ? '' : collaborators
+      };
+      webhookUrl = isIn ? CLOCKIN_WEBHOOK : CLOCKOUT_WEBHOOK;
+    }
 
     try {
       if (webhookUrl && !webhookUrl.startsWith('YOUR_')) {
@@ -666,52 +747,65 @@
       showSuccess(payload);
     } catch (err) {
       console.error(err);
-      showSuccess(payload); // still confirm locally
+      showSuccess(payload);
       toast('Logged locally — verify webhook URL', 'err');
     }
 
     btn.disabled = false;
     spin.style.display = 'none';
-    txt.textContent = isIn ? '▶ \u00a0Clock In Now' : '■ \u00a0Clock Out Now';
+    txt.textContent = isIn ? '▶ \u00a0Clock In Now' : isOff ? '📅 \u00a0Submit Time Off Request' : '■ \u00a0Clock Out Now';
   });
 
   function showSuccess(data) {
-    const isIn = data.action === 'CLOCK_IN';
+    const isIn  = data.action === 'CLOCK_IN';
+    const isOff = data.action === 'TIME_OFF_REQUEST';
     document.getElementById('form-view').style.display = 'none';
     const sv = document.getElementById('success-view');
     sv.classList.add('show');
 
     const badge = document.getElementById('success-badge');
-    badge.className = 'success-badge ' + (isIn ? 'in' : 'out');
-    badge.textContent = '✓';
+    badge.className = 'success-badge ' + (isIn ? 'in' : isOff ? 'off' : 'out');
+    badge.textContent = isOff ? '📅' : '✓';
 
-    document.getElementById('success-title').textContent = isIn ? 'Clocked In ▶' : 'Clocked Out ■';
-    document.getElementById('success-sub').textContent   = isIn
+    document.getElementById('success-title').textContent = isIn ? 'Clocked In ▶' : isOff ? 'Request Submitted 📅' : 'Clocked Out ■';
+    document.getElementById('success-sub').textContent = isIn
       ? 'Your start time is recorded. Clock out when you\'re done.'
+      : isOff
+      ? 'Your time off request has been sent to your manager for approval.'
       : 'Your session has been logged and your manager notified.';
 
-    const rows = [
-      ['Engineer', data.engineer_name],
-      ['Project',  data.project],
-      ['Action',   isIn ? 'CLOCK IN' : 'CLOCK OUT'],
-      ['Time',     data.timestamp_local],
-    ];
-
-    if (!isIn && data.notes) rows.push(['Work Summary', data.notes]);
-    if (!isIn && data.collaborators) rows.push(['Worked With', data.collaborators]);
+    let rows;
+    if (isOff) {
+      rows = [
+        ['Engineer',   data.engineer_name],
+        ['Leave Type', data.leave_type],
+        ['Start Date', data.start_date],
+        ['End Date',   data.end_date],
+        ['Status',     'PENDING APPROVAL'],
+      ];
+      if (data.notes) rows.push(['Notes', data.notes]);
+    } else {
+      rows = [
+        ['Engineer', data.engineer_name],
+        ['Project',  data.project],
+        ['Action',   isIn ? 'CLOCK IN' : 'CLOCK OUT'],
+        ['Time',     data.timestamp_local],
+      ];
+      if (!isIn && data.notes) rows.push(['Work Summary', data.notes]);
+      if (!isIn && data.collaborators) rows.push(['Worked With', data.collaborators]);
+    }
 
     document.getElementById('summary-box').innerHTML = rows.map(([k, v]) => `
       <div class="summary-row">
         <span class="s-key">${k}</span>
-        <span class="s-val ${k === 'Action' ? 'highlight' : ''}">${v}</span>
+        <span class="s-val ${k === 'Action' || k === 'Status' ? 'highlight' : ''}">${v}</span>
       </div>`).join('');
 
-    toast(isIn ? 'Clocked in — have a great session!' : 'Clocked out — session logged!', 'ok');
+    toast(isIn ? 'Clocked in — have a great session!' : isOff ? 'Time off request submitted!' : 'Clocked out — session logged!', 'ok');
   }
 
   function resetForm() {
     document.getElementById('timesheet-form').reset();
-    document.getElementById('date') && (document.getElementById('date').valueAsDate = new Date());
     document.getElementById('collaborators').value = '';
     document.getElementById('form-view').style.display = 'block';
     document.getElementById('success-view').classList.remove('show');
