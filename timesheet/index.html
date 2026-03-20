@@ -542,7 +542,7 @@
 
         <div class="form-group" id="project-group">
           <label>Client / Project</label>
-          <input type="text" id="project" placeholder="e.g. Prentex — M365 Migration" required/>
+          <input type="text" id="project" placeholder="e.g. Prentex — M365 Migration"/>
         </div>
 
         <div class="form-group" id="summary-group" style="display:none;">
@@ -701,6 +701,15 @@
     btn.disabled = true;
     spin.style.display = 'block';
     txt.textContent = 'Submitting...';
+
+    // Validate project for clock in/out
+    if (!isOff && !project) {
+      toast('Please enter a Client / Project.', 'err');
+      btn.disabled = false;
+      spin.style.display = 'none';
+      txt.textContent = isIn ? '▶ \u00a0Clock In Now' : '■ \u00a0Clock Out Now';
+      return;
+    }
 
     let payload, webhookUrl;
 
