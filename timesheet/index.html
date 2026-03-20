@@ -536,6 +536,11 @@
         </div>
 
         <div class="form-group">
+          <label>Your Email</label>
+          <input type="email" id="engineer-email" placeholder="your@email.com" required autocomplete="email"/>
+        </div>
+
+        <div class="form-group" id="project-group">
           <label>Client / Project</label>
           <input type="text" id="project" placeholder="e.g. Prentex — M365 Migration" required/>
         </div>
@@ -647,8 +652,8 @@
     // Show/hide clock stamp
     document.querySelector('.clock-stamp').style.display = isOff ? 'none' : 'flex';
 
-    // Show/hide fields
-    document.getElementById('summary-group').style.display       = isOut ? 'block' : 'none';
+    // Show/hide project field
+    document.getElementById('project-group').style.display  = isOff ? 'none' : 'block';
     document.getElementById('collab-group').style.display        = isOut ? 'block' : 'none';
     document.getElementById('timeoff-type-group').style.display  = isOff ? 'block' : 'none';
     document.getElementById('timeoff-start-group').style.display = isOff ? 'block' : 'none';
@@ -681,6 +686,7 @@
     e.preventDefault();
 
     const name          = document.getElementById('name').value.trim();
+    const engineerEmail = document.getElementById('engineer-email').value.trim();
     const project       = document.getElementById('project').value.trim();
     const notes         = document.getElementById('notes').value.trim();
     const collaborators = document.getElementById('collaborators').value.trim();
@@ -715,6 +721,7 @@
       payload = {
         action: 'TIME_OFF_REQUEST',
         engineer_name: name,
+        engineer_email: engineerEmail,
         leave_type: leaveType,
         start_date: startDate,
         end_date: endDate,
@@ -727,6 +734,7 @@
       payload = {
         action: isIn ? 'CLOCK_IN' : 'CLOCK_OUT',
         engineer_name: name,
+        engineer_email: engineerEmail,
         project,
         timestamp: now,
         timestamp_local: fmt(now),
