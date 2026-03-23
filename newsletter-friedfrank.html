@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCS Cyber Brief No. 6 — Fried Frank Law Firm Breach Exposes 46,000+</title>
+    <meta name="description" content="A data breach at elite law firm Fried Frank exposed sensitive data of 46,000+ individuals, including JPMorgan and Goldman Sachs investors. Learn what happened and how to protect your firm.">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f0f2f5;
+            color: #2c2c2c;
+            line-height: 1.65;
+        }
+
+        /* ── Navigation ── */
+        nav {
+            background-color: #0d1f3c;
+            padding: 14px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .brand {
+            font-family: 'Lato', sans-serif;
+            color: rgba(200,168,75,0.6);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.4px;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        nav .nav-links a {
+            color: rgba(246,248,251,0.5);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        nav .nav-links a:hover {
+            color: #c8a84b;
+        }
+
+        /* ── Breadcrumb ── */
+        .breadcrumb {
+            background-color: #f0f2f5;
+            padding: 10px 32px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .breadcrumb a {
+            color: #888;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #c8a84b;
+        }
+
+        .breadcrumb .sep {
+            margin: 0 6px;
+            color: #aaa;
+        }
+
+        .breadcrumb .current {
+            color: #555;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background-color: #0d1f3c;
+            padding: 48px 32px 56px;
+            position: relative;
+        }
+
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 32px;
+        }
+
+        .hero-brand {
+            font-family: 'Lato', sans-serif;
+            color: rgba(200,168,75,0.6);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.4px;
+            text-transform: uppercase;
+        }
+
+        .hero-badge {
+            font-family: 'Lato', sans-serif;
+            color: rgba(200,168,75,0.5);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border: 1px solid rgba(200,168,75,0.25);
+            padding: 5px 14px;
+            border-radius: 3px;
+        }
+
+        .hero-category {
+            font-family: 'Lato', sans-serif;
+            color: rgba(200,168,75,0.65);
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 2.4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            color: #f6f8fb;
+            font-size: 58px;
+            font-weight: 900;
+            line-height: 1.1;
+            max-width: 760px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 em {
+            color: #c8a84b;
+            font-style: italic;
+        }
+
+        .hero-divider {
+            width: 48px;
+            height: 3px;
+            background-color: #c8a84b;
+            margin: 28px 0;
+        }
+
+        .hero-intro {
+            font-family: 'Lato', sans-serif;
+            color: rgba(246,248,251,0.72);
+            font-size: 16px;
+            line-height: 1.65;
+            max-width: 680px;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 20px;
+            margin-top: 28px;
+        }
+
+        .hero-meta span {
+            font-family: 'Lato', sans-serif;
+            color: rgba(200,168,75,0.55);
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* ── Alert Strip ── */
+        .alert-strip {
+            background-color: #c0392b;
+            color: #1a1a2e;
+            text-align: center;
+            padding: 10px 32px;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+
+        .alert-strip a {
+            color: #fff;
+            text-decoration: underline;
+            margin-left: 8px;
+        }
+
+        /* ── Body Content ── */
+        .content {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 52px 32px;
+        }
+
+        .section-label {
+            font-family: 'Lato', sans-serif;
+            color: #c8a84b;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 2.4px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .section-divider {
+            width: 48px;
+            height: 3px;
+            background-color: #c8a84b;
+            margin-bottom: 16px;
+        }
+
+        .content h2 {
+            font-family: 'Playfair Display', serif;
+            color: #0d1f3c;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .content p {
+            margin-bottom: 18px;
+            font-size: 16px;
+            color: #3a3a3a;
+            line-height: 1.65;
+        }
+
+        .content strong {
+            color: #0d1f3c;
+        }
+
+        .content ul {
+            margin: 0 0 22px 24px;
+        }
+
+        .content ul li {
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: #3a3a3a;
+            line-height: 1.65;
+        }
+
+        .content-section {
+            margin-top: 48px;
+        }
+
+        /* ── Stat Cards ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 28px 0 32px;
+        }
+
+        .stat-card {
+            background-color: #0d1f3c;
+            border-radius: 10px;
+            padding: 28px 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            color: #c8a84b;
+            font-size: 38px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-family: 'Lato', sans-serif;
+            color: rgba(246,248,251,0.55);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* Key facts box */
+        .key-facts {
+            background-color: #ffffff;
+            border-left: 4px solid #c8a84b;
+            padding: 24px 28px;
+            margin: 28px 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .key-facts h3 {
+            font-family: 'Playfair Display', serif;
+            color: #0d1f3c;
+            font-size: 18px;
+            margin-bottom: 14px;
+        }
+
+        .key-facts ul {
+            margin: 0 0 0 20px;
+        }
+
+        .key-facts ul li {
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        /* Highlight callout */
+        .callout {
+            background: #0d1f3c;
+            color: #ffffff;
+            padding: 28px 32px;
+            border-radius: 8px;
+            margin: 32px 0;
+            border-left: 4px solid #c8a84b;
+        }
+
+        .callout p {
+            color: rgba(246,248,251,0.8);
+            font-size: 16px;
+            margin-bottom: 0;
+            line-height: 1.65;
+        }
+
+        .callout strong {
+            color: #c8a84b;
+        }
+
+        /* ── CTA Section ── */
+        .cta {
+            background-color: #0d1f3c;
+            padding: 64px 32px;
+            text-align: center;
+        }
+
+        .cta-label {
+            font-family: 'Lato', sans-serif;
+            color: rgba(200,168,75,0.55);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.4px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .cta h2 {
+            font-family: 'Playfair Display', serif;
+            color: #f6f8fb;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .cta p {
+            color: rgba(246,248,251,0.55);
+            font-size: 15px;
+            max-width: 520px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #c8a84b;
+            color: #0d1f3c;
+            padding: 16px 36px;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .cta-button:hover {
+            background-color: #b8963e;
+            transform: translateY(-1px);
+        }
+
+        .cta-contact {
+            color: rgba(246,248,251,0.4);
+            font-size: 13px;
+            margin-top: 24px;
+        }
+
+        .cta-contact a {
+            color: #c8a84b;
+            text-decoration: none;
+        }
+
+        .cta-contact a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── Previous Brief Link ── */
+        .prev-brief {
+            background-color: #f0f2f5;
+            padding: 32px;
+        }
+
+        .prev-brief a {
+            color: #0d1f3c;
+            text-decoration: none;
+            display: block;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .prev-brief-label {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .prev-brief-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #0d1f3c;
+        }
+
+        .prev-brief a:hover .prev-brief-title {
+            color: #c8a84b;
+        }
+
+        /* ── Footer ── */
+        footer {
+            background-color: #0d1f3c;
+            padding: 48px 32px;
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-family: 'Lato', sans-serif;
+            color: rgba(246,248,251,0.7);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-divider {
+            width: 48px;
+            height: 2px;
+            background-color: rgba(200,168,75,0.3);
+            margin: 0 auto 20px;
+        }
+
+        footer p {
+            color: rgba(246,248,251,0.35);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        footer a {
+            color: #c8a84b;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-back {
+            margin-top: 20px;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            nav { padding: 12px 20px; }
+            .breadcrumb { padding: 10px 20px; }
+            .hero { padding: 36px 20px 44px; }
+            .hero h1 { font-size: 34px; }
+            .hero-top { flex-direction: column; gap: 12px; }
+            .content { padding: 36px 20px; }
+            .content h2 { font-size: 24px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .cta { padding: 44px 20px; }
+            .cta h2 { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="https://dcs-cyber-briefs.netlify.app" class="brand">DCS Cyber Briefs</a>
+        <div class="nav-links">
+            <a href="https://dcs-cyber-briefs.netlify.app">All Briefs</a>
+            <a href="https://dcs-security-assessment.netlify.app">Free Assessment</a>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="https://dcs-cyber-briefs.netlify.app">Home</a>
+        <span class="sep">›</span>
+        <a href="https://dcs-cyber-briefs.netlify.app">Cyber Briefs</a>
+        <span class="sep">›</span>
+        <span class="current">Issue 06 — Fried Frank Data Breach</span>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-top">
+            <div class="hero-brand">DCS Cyber Briefs</div>
+            <div class="hero-badge">Issue 06</div>
+        </div>
+        <div class="hero-category">Law Firm Data Breach — March 2026</div>
+        <h1>One compromised account.<br>46,000 people <em>exposed.</em></h1>
+        <div class="hero-divider"></div>
+        <p class="hero-intro">Fried, Frank, Harris, Shriver &amp; Jacobson LLP — one of Wall Street's most elite law firms — had a single user account compromised. In five days, an attacker copied sensitive data for tens of thousands of individuals, including private equity investors at JPMorgan Chase and Goldman Sachs. Here's what happened, and what it means for your firm.</p>
+        <div class="hero-meta">
+            <span>Published March 2026</span>
+            <span>5 min read</span>
+            <span>Data Collaboration Services Consulting</span>
+        </div>
+    </div>
+
+    <!-- Alert Strip -->
+    <div class="alert-strip">
+        Active Security Alert — Law Firm Client Data Exposed
+        <a href="https://dcs-security-assessment.netlify.app">Check your exposure →</a>
+    </div>
+
+    <!-- Body Content -->
+    <article class="content">
+
+        <!-- Section: What Happened -->
+        <div class="section-label">What Happened</div>
+        <h2>A Single Password Opened the Door to 46,000 Records</h2>
+        <p>On October 27, 2025, Fried, Frank, Harris, Shriver &amp; Jacobson LLP — one of the most prestigious law firms in the world — discovered that a single user account on its network had been compromised by an unauthorized third party.</p>
+        <p>The breach window was narrow: <strong>October 23 through early morning October 28, 2025</strong>. But in those five days, the attacker accessed a shared network drive and copied files containing highly sensitive personal and financial information.</p>
+        <p>What makes this breach extraordinary isn't just the scale — it's the caliber of clients affected. The stolen data included account information belonging to private equity investors at <strong>JPMorgan Chase</strong> and <strong>Goldman Sachs</strong>, two of the largest financial institutions on the planet.</p>
+
+        <!-- Section: By the Numbers -->
+        <div class="content-section">
+            <div class="section-divider"></div>
+            <div class="section-label">By the Numbers</div>
+            <h2>The Scale of This Breach</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">46,602</div>
+                    <div class="stat-label">Individuals Affected</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Days of Unauthorized Access</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Compromised Account</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">659</div>
+                    <div class="stat-label">JPMorgan Investors Impacted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">90+</div>
+                    <div class="stat-label">Days Before Victim Notification</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Major Banks Affected</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Key Facts -->
+        <div class="key-facts">
+            <h3>Data Exposed in the Breach</h3>
+            <ul>
+                <li><strong>Names</strong> and contact information</li>
+                <li><strong>Social Security numbers</strong></li>
+                <li><strong>Passport numbers</strong> and government-issued IDs</li>
+                <li><strong>Financial account numbers</strong></li>
+                <li>Data tied to <strong>JPMorgan Chase</strong> and <strong>Goldman Sachs</strong> private equity fund investors</li>
+            </ul>
+        </div>
+
+        <!-- Section: Cascade Effect -->
+        <div class="content-section">
+            <div class="section-divider"></div>
+            <div class="section-label">The Cascade Effect</div>
+            <h2>When Your Law Firm's Breach Becomes Your Clients' Breach</h2>
+            <p>This incident illustrates what security professionals call <strong>third-party risk</strong> — the danger that your organization's data is only as secure as the vendors and partners who handle it.</p>
+            <p>Goldman Sachs was the first to act, sending breach notification letters to affected investors on <strong>December 19, 2025</strong>. JPMorgan Chase followed in <strong>January 2026</strong>, reporting to state attorneys general that 659 of its investors were directly impacted.</p>
+            <p>Both banks were clear: their own systems were not compromised. The breach was entirely within Fried Frank's environment. But that distinction offers little comfort to the tens of thousands of individuals whose Social Security numbers and passport data are now in unknown hands.</p>
+
+            <div class="callout">
+                <p><strong>The takeaway is stark:</strong> When your trusted legal partner suffers a breach, it becomes your breach too. Your clients' data doesn't care whose server it was stored on — they hold you accountable.</p>
+            </div>
+        </div>
+
+        <!-- Section: Lawsuits -->
+        <div class="content-section">
+            <div class="section-divider"></div>
+            <div class="section-label">Legal Fallout</div>
+            <h2>Lawsuits Pile Up as Notification Delays Draw Scrutiny</h2>
+            <p>The consequences have been swift. Fried Frank is facing <strong>class action lawsuits</strong> alleging the firm failed to adequately safeguard sensitive personal information. Plaintiffs claim the firm did not notify affected individuals promptly or offer credit monitoring services in a timely manner.</p>
+            <p>Written notification to affected individuals didn't arrive until <strong>January 30, 2026</strong> — more than three months after the breach occurred. In the world of cybersecurity incident response, that delay creates a wide window for bad actors to exploit stolen data before victims even know they're at risk.</p>
+        </div>
+
+        <!-- Section: Action Steps -->
+        <div class="content-section">
+            <div class="section-divider"></div>
+            <div class="section-label">Action Steps</div>
+            <h2>What Your Firm Should Do Right Now</h2>
+            <p>If you're a law firm, accounting practice, or professional services business, this story should hit close to home.</p>
+            <ul>
+                <li><strong>Enforce multi-factor authentication (MFA) everywhere.</strong> This breach started with a single compromised account. MFA, strong password policies, and regular credential audits are non-negotiable.</li>
+                <li><strong>Audit shared drive permissions.</strong> Network drive access should follow the principle of least privilege. Not everyone needs access to everything.</li>
+                <li><strong>Deploy continuous monitoring.</strong> Fried Frank's attacker had five days of access. Anomaly detection and real-time alerting can shrink that window dramatically.</li>
+                <li><strong>Vet your vendors' security posture.</strong> If you share client data with outside counsel, IT providers, or cloud platforms, their security is part of yours.</li>
+                <li><strong>Test your incident response plan.</strong> Three months to notify affected individuals is too long. A well-rehearsed plan compresses that timeline and reduces legal exposure.</li>
+            </ul>
+        </div>
+
+        <!-- Section: Bottom Line -->
+        <div class="content-section">
+            <div class="section-divider"></div>
+            <div class="section-label">The Bottom Line</div>
+            <h2>Your Firm's Reputation Is Only One Breach Away</h2>
+            <p>The Fried Frank breach is a case study in how quickly trust can erode. One compromised account turned one of Wall Street's most elite law firms into a headline — and a defendant. The firms whose client data was exposed are now answering uncomfortable questions from investors, regulators, and the public.</p>
+            <p>The question is not whether a breach will affect your firm. The question is whether you'll know about it in time to act — and whether you have the defenses in place to limit the damage.</p>
+        </div>
+
+    </article>
+
+    <!-- CTA Section -->
+    <div class="cta">
+        <div class="cta-label">Free — No Obligation</div>
+        <h2>How Exposed Is Your Firm?</h2>
+        <p>Take our free 2-minute security risk assessment to find out where your vulnerabilities are — before an attacker does.</p>
+        <a href="https://dcs-security-assessment.netlify.app" class="cta-button">Get Your Free Assessment</a>
+        <p class="cta-contact">Questions? Contact Kenneth Walton directly:<br><a href="mailto:kwalton@datacollaborationservices.com">kwalton@datacollaborationservices.com</a> | <a href="tel:8009227994">800-922-7994</a></p>
+    </div>
+
+    <!-- Previous Brief -->
+    <div class="prev-brief">
+        <a href="newsletter-lexisnexis.html">
+            <div class="prev-brief-label">← Previous Brief</div>
+            <div class="prev-brief-title">Issue 05 — LexisNexis Data Breach: 3.9M Records Exposed</div>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-brand">Data Collaboration Services Consulting</div>
+        <div class="footer-divider"></div>
+        <p>Managed IT &amp; Cybersecurity Services for Law Firms &amp; Professional Services</p>
+        <p><a href="mailto:kwalton@datacollaborationservices.com">kwalton@datacollaborationservices.com</a> | <a href="tel:8009227994">800-922-7994</a></p>
+        <div class="footer-divider" style="margin-top:20px;"></div>
+        <p class="footer-back"><a href="https://dcs-cyber-briefs.netlify.app">← Back to All Cyber Briefs</a></p>
+    </footer>
+
+</body>
+</html>
