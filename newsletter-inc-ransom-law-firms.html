@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DCS Cyber Briefs — Issue 07: INC Ransom Targets 20 Law Firms in Coordinated Blitz</title>
+  <meta name="description" content="INC Ransomware claimed 20 U.S. law firms in 2026 — including 10 in a single 48-hour window. The coordinated campaign may signal a shared supply chain breach in legal technology." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy: #0d1f3c; --gold: #c8a84b; --offwhite: #f0f2f5; --alert-red: #c0392b; --body-text: #2c2c2c; --mid-gray: #6b7280; --light-border: #e2e6ea; --dark-section: #0a1929; }
+    body { font-family: 'Lato', sans-serif; background-color: var(--offwhite); color: var(--body-text); line-height: 1.7; font-size: 17px; }
+    a { color: inherit; }
+    nav { background-color: var(--navy); padding: 0 32px; height: 58px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); text-decoration: none; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { color: rgba(255,255,255,0.82); text-decoration: none; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+    .breadcrumb { background: #e8eaed; border-bottom: 1px solid #d3d6db; padding: 10px 40px; font-size: 0.8rem; color: var(--mid-gray); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+    .breadcrumb a { color: var(--navy); text-decoration: none; }
+    .hero { background: linear-gradient(160deg, #0a1929 0%, var(--navy) 55%, #162845 100%); padding: 72px 40px 64px; text-align: center; }
+    .hero-meta-top { display: flex; align-items: center; justify-content: center; gap: 18px; margin-bottom: 28px; }
+    .brand-tag { font-family: 'Playfair Display', serif; font-size: 0.78rem; color: rgba(255,255,255,0.55); letter-spacing: 0.12em; text-transform: uppercase; font-style: italic; }
+    .issue-badge { background: var(--gold); color: var(--navy); font-size: 0.7rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 2px; }
+    .hero-category { font-size: 0.82rem; color: var(--gold); letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; margin-bottom: 20px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 900; color: #fff; line-height: 1.18; max-width: 820px; margin: 0 auto 28px; }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+    .gold-divider { width: 72px; height: 3px; background: var(--gold); margin: 0 auto 28px; border-radius: 2px; }
+    .hero-intro { color: rgba(255,255,255,0.85); font-size: 1.13rem; max-width: 720px; margin: 0 auto 28px; line-height: 1.75; font-weight: 300; }
+    .hero-publication { font-size: 0.78rem; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; }
+    .alert-strip { background: var(--alert-red); padding: 16px 40px; text-align: center; color: #fff; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .alert-strip a { color: #fff; text-decoration: underline; }
+    .article-wrap { max-width: 820px; margin: 0 auto; padding: 56px 24px 72px; }
+    .section-label { font-size: 0.72rem; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .section-divider { width: 100%; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); margin-bottom: 24px; }
+    .article-section { margin-bottom: 56px; }
+    .article-section h2 { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--navy); margin-bottom: 18px; line-height: 1.3; }
+    .article-section p { margin-bottom: 16px; color: #3a3a3a; }
+    .article-section strong { color: var(--navy); font-weight: 700; }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+    .stat-card { background: #fff; border: 1px solid var(--light-border); border-top: 3px solid var(--gold); border-radius: 6px; padding: 20px 16px; text-align: center; }
+    .stat-number { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--navy); line-height: 1.1; margin-bottom: 6px; }
+    .stat-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid-gray); }
+    .victim-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 24px 0; }
+    .victim-card { background: #fff; border: 1px solid var(--light-border); border-left: 3px solid var(--alert-red); border-radius: 4px; padding: 14px 16px; font-size: 0.92rem; }
+    .victim-card strong { color: var(--navy); display: block; margin-bottom: 3px; }
+    .victim-card span { color: var(--mid-gray); font-size: 0.8rem; }
+    .key-facts-box { background: #fff; border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; padding: 24px 28px; margin: 24px 0; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .key-facts-box h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .key-facts-box ul { list-style: none; padding: 0; }
+    .key-facts-box ul li { padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.95rem; color: #3a3a3a; display: flex; gap: 10px; }
+    .key-facts-box ul li::before { content: '▸'; color: var(--gold); flex-shrink: 0; }
+    .warning-box { background: #fff8f0; border: 1px solid #f0c070; border-left: 4px solid #e67e22; border-radius: 4px; padding: 20px 24px; margin: 24px 0; }
+    .warning-box p { color: #5a3e1b; margin-bottom: 8px; font-size: 0.95rem; }
+    .warning-box strong { color: #7a4a10; }
+    .action-steps { background: var(--navy); border-radius: 8px; padding: 32px 36px; margin: 24px 0; color: #fff; }
+    .action-steps h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--gold); margin-bottom: 20px; }
+    .action-steps ol { padding-left: 20px; }
+    .action-steps ol li { padding: 8px 0 8px 8px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.97rem; line-height: 1.6; color: rgba(255,255,255,0.88); }
+    .action-steps ol li strong { color: #fff; }
+    .bottom-line { background: linear-gradient(135deg, #f6f0e4 0%, #fdf9f0 100%); border: 1px solid #e8dfc4; border-radius: 8px; padding: 32px 36px; margin: 24px 0; }
+    .bottom-line h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+    .bottom-line p { color: #444; margin-bottom: 14px; }
+    .cta-section { background: linear-gradient(160deg, #0a1929 0%, var(--navy) 100%); padding: 64px 40px; text-align: center; color: #fff; }
+    .cta-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; margin-bottom: 18px; }
+    .cta-section p { color: rgba(255,255,255,0.75); font-size: 1.05rem; max-width: 600px; margin: 0 auto 32px; line-height: 1.7; }
+    .cta-button { display: inline-block; background: var(--gold); color: var(--navy); font-weight: 900; font-size: 0.88rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; padding: 16px 36px; border-radius: 3px; }
+    .cta-contact { margin-top: 28px; font-size: 0.88rem; color: rgba(255,255,255,0.5); }
+    .cta-contact a { color: var(--gold); text-decoration: none; }
+    .prev-brief { max-width: 820px; margin: 0 auto; padding: 36px 24px; border-top: 1px solid var(--light-border); display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .prev-brief-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid-gray); margin-bottom: 6px; }
+    .prev-brief-link { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); text-decoration: none; }
+    .prev-brief-arrow { font-size: 1.5rem; color: var(--gold); }
+    footer { background: var(--dark-section); color: rgba(255,255,255,0.55); text-align: center; padding: 48px 32px; font-size: 0.85rem; }
+    footer .footer-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); margin-bottom: 8px; display: block; }
+    footer .footer-tagline { color: rgba(255,255,255,0.38); font-size: 0.8rem; font-style: italic; margin-bottom: 16px; }
+    footer a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    footer .footer-divider { margin: 20px auto; width: 48px; height: 1px; background: rgba(255,255,255,0.12); }
+    footer .back-link { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="https://dcs-cyber-briefs.netlify.app" class="nav-brand">DCS Cyber Briefs</a>
+    <div class="nav-links">
+      <a href="https://dcs-cyber-briefs.netlify.app">All Briefs</a>
+      <a href="https://dcs-security-assessment.netlify.app">Free Assessment</a>
+    </div>
+  </nav>
+  <div class="breadcrumb">
+    <a href="https://dcs-cyber-briefs.netlify.app">Home</a> &rsaquo;
+    <a href="https://dcs-cyber-briefs.netlify.app">Cyber Briefs</a> &rsaquo;
+    Issue 07 — INC Ransom Targets U.S. Law Firms
+  </div>
+  <section class="hero">
+    <div class="hero-meta-top">
+      <span class="brand-tag">DCS Cyber Briefs</span>
+      <span class="issue-badge">Issue 07</span>
+    </div>
+    <div class="hero-category">Legal Sector Ransomware Campaign — March 2026</div>
+    <h1>One Ransomware Gang. Twenty Law Firms. A <em>Coordinated</em> Blitz on the Legal Sector.</h1>
+    <div class="gold-divider"></div>
+    <p class="hero-intro">In early 2026, the INC Ransomware group claimed 20 U.S. law firms as victims — including 10 in a single 48-hour window. Security researchers believe the clustering points to a shared breach of a legal technology provider. Your firm may be using the same platform.</p>
+    <div class="hero-publication">Published March 2026 &nbsp;·&nbsp; <strong>6 min read</strong> &nbsp;·&nbsp; Data Collaboration Services Consulting</div>
+  </section>
+  <div class="alert-strip">⚠ Active Security Alert — Coordinated Ransomware Campaign Targeting U.S. Law Firms &nbsp;|&nbsp; <a href="https://dcs-security-assessment.netlify.app">Get Your Free Security Assessment →</a></div>
+  <div class="article-wrap">
+    <div class="article-section">
+      <div class="section-label">What Happened</div><div class="section-divider"></div>
+      <h2>Ten Firms in 48 Hours. The Legal Sector Is in the Crosshairs.</h2>
+      <p>In the opening months of 2026, the <strong>INC Ransomware group</strong> went on a targeting spree against U.S. law firms unlike anything the legal sector had seen before. Security firm Halcyon tracked the group claiming <strong>10 law firms and legal services organizations on its dark web leak site within a single 48-hour window</strong>.</p>
+      <p>By the time the dust settled, INC Ransom had claimed a total of <strong>20 law firms</strong> in 2026 alone. Halcyon's broader tracking puts the total number of ransomware incidents against law firms between 2025 and early 2026 at <strong>more than 200</strong>.</p>
+      <p>The 48-hour clustering is what concerns investigators most. When a ransomware group claims 10 firms in two days — all in the same industry — it typically signals a shared upstream compromise of a legal technology provider. <strong>It means attackers may have already been inside these firms for weeks or months before the ransomware was deployed.</strong></p>
+      <div class="warning-box"><p><strong>What is INC Ransomware?</strong></p><p>INC Ransomware is a sophisticated ransomware-as-a-service (RaaS) operation active since mid-2023. The group exploits known vulnerabilities in <strong>Citrix remote access gateways, Fortinet firewalls, and SimpleHelp RMM software</strong> — tools widely deployed across law firms and managed IT providers.</p></div>
+    </div>
+    <div class="article-section">
+      <div class="section-label">By the Numbers</div><div class="section-divider"></div>
+      <h2>The Scale of the Campaign</h2>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-number">20</div><div class="stat-label">Law Firms Claimed in 2026</div></div>
+        <div class="stat-card"><div class="stat-number">10</div><div class="stat-label">Firms Hit in 48 Hours</div></div>
+        <div class="stat-card"><div class="stat-number">200+</div><div class="stat-label">Legal Sector Incidents Since 2025</div></div>
+        <div class="stat-card"><div class="stat-number">3</div><div class="stat-label">Known Entry Vectors</div></div>
+        <div class="stat-card"><div class="stat-number">2</div><div class="stat-label">Active Groups Targeting Legal</div></div>
+        <div class="stat-card"><div class="stat-number">200K+</div><div class="stat-label">Firms Exposed to AI Phishing Flaw</div></div>
+      </div>
+    </div>
+    <div class="article-section">
+      <div class="section-label">Known Victims</div><div class="section-divider"></div>
+      <h2>Named on the Leak Site</h2>
+      <p>The following U.S. law firms were publicly claimed by INC Ransom on its dark web leak site:</p>
+      <div class="victim-grid">
+        <div class="victim-card"><strong>The Law Offices of Mark E. Lewis</strong><span>Claimed 2026 — Data Published</span></div>
+        <div class="victim-card"><strong>Napolin Accident Injury Lawyer</strong><span>Claimed 2026 — Data Published</span></div>
+        <div class="victim-card"><strong>Jonathan R. Brockman, P.C.</strong><span>Claimed 2026 — Data Published</span></div>
+        <div class="victim-card"><strong>The Law Offices of Eric Hershler, APC</strong><span>Claimed 2026 — Data Published</span></div>
+        <div class="victim-card"><strong>Hopkins Law</strong><span>Claimed 2026 — Data Published</span></div>
+        <div class="victim-card"><strong>Hawk Law Group</strong><span>Claimed Feb 1, 2026 — Data Published</span></div>
+        <div class="victim-card"><strong>Parker Lipman LLP</strong><span>Denver Personal Injury — Data Published</span></div>
+        <div class="victim-card"><strong>+ 13 additional firms</strong><span>Claimed in 2026</span></div>
+      </div>
+    </div>
+    <div class="article-section">
+      <div class="section-label">Key Facts</div><div class="section-divider"></div>
+      <h2>Why Law Firms Are the Target</h2>
+      <div class="key-facts-box"><h3>What Makes Law Firms Uniquely Vulnerable</h3>
+        <ul>
+          <li>Attorney-client privilege creates enormous pressure to pay ransoms quietly</li>
+          <li>Law firms hold sensitive data across multiple clients — one breach exposes everyone</li>
+          <li>Legal tech tools (Citrix, case management, e-discovery) often run on outdated patch cycles</li>
+          <li>Shared managed IT providers create single points of failure across multiple firms</li>
+          <li>Regulatory disclosure obligations create compliance pressure under tight timelines</li>
+          <li>M&amp;A transactions, litigation files, and criminal defense data command premium dark web value</li>
+        </ul>
+      </div>
+    </div>
+    <div class="article-section">
+      <div class="section-label">The Wider Impact</div><div class="section-divider"></div>
+      <h2>The Supply Chain Theory — and What It Means for Your Firm</h2>
+      <p>The 48-hour clustering has led Halcyon researchers to theorize a <strong>shared upstream compromise</strong> — likely a breach of a legal technology platform used across multiple firms.</p>
+      <p><strong>Your firm doesn't have to be doing anything wrong to be at risk. You just have to share a technology provider with another firm that was already breached.</strong></p>
+      <p>A separate FBI advisory confirmed that the <strong>Silent Ransom Group</strong> is concurrently running a vishing campaign against U.S. law firms. The legal sector is under coordinated assault from multiple ransomware ecosystems simultaneously.</p>
+      <p>A phishing vulnerability in the <strong>Vincent AI legal research platform</strong> exposes more than 200,000 law firms to credential theft.</p>
+    </div>
+    <div class="article-section">
+      <div class="section-label">Legal &amp; Regulatory Fallout</div><div class="section-divider"></div>
+      <h2>What a Ransomware Hit Means for Your Firm's Obligations</h2>
+      <p>Every state bar imposes duties of confidentiality — a breach of client data may constitute an ethical violation requiring prompt client notification and disciplinary reporting.</p>
+      <p>State breach notification laws may require notifying affected individuals within 30 to 72 hours. Missing that window creates independent liability separate from the breach itself.</p>
+      <p>INC Ransom's strategy maximizes this pressure — publishing stolen data publicly when victims don't pay forces firms into a race between paying the ransom and managing the disclosure avalanche. <strong>The legal liability doesn't end when the ransomware is removed — it begins.</strong></p>
+    </div>
+    <div class="article-section">
+      <div class="section-label">Action Steps</div><div class="section-divider"></div>
+      <h2>What Your Firm Should Do Right Now</h2>
+      <div class="action-steps"><h3>Five Immediate Priorities</h3>
+        <ol>
+          <li><strong>Audit every remote access tool immediately.</strong> INC Ransom's primary entry vectors are Citrix, Fortinet, and SimpleHelp RMM. Verify latest patched versions and rotate all credentials.</li>
+          <li><strong>Inventory your legal technology vendors and ask hard questions.</strong> Request SOC 2 reports, penetration test results, and incident response procedures from every vendor.</li>
+          <li><strong>Train every person who answers the phone.</strong> The Silent Ransom Group calls staff posing as IT support. Any call requesting remote access or MFA codes needs immediate verification.</li>
+          <li><strong>Test your backup and recovery capability now.</strong> Ransomware groups deliberately destroy backups before encrypting. Offline, air-gapped backups are the only reliable defense.</li>
+          <li><strong>Document your incident response plan before you need it.</strong> Know in advance who to call, which clients require notification, and what your bar association requires.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="article-section">
+      <div class="section-label">The Bottom Line</div><div class="section-divider"></div>
+      <div class="bottom-line">
+        <h2>The Legal Sector Is Being Hunted. Not Randomly — Deliberately.</h2>
+        <p>INC Ransom didn't stumble into the legal sector. They chose it. They understand attorney-client privilege and know how to price a ransom that puts firms in an impossible position.</p>
+        <p>The 48-hour, 10-firm blitz is the story of a criminal enterprise that has mapped the legal sector's shared technology dependencies and is methodically exploiting them.</p>
+        <p><strong>If your firm uses Citrix, Fortinet, or SimpleHelp — or shares a managed IT provider with other law firms — you are not a hypothetical target. You are a current one.</strong></p>
+        <p>The question is whether they've already found the door.</p>
+      </div>
+    </div>
+  </div>
+  <section class="cta-section">
+    <h2>How Exposed Is Your Firm?</h2>
+    <p>INC Ransom is actively hunting law firms through shared technology vendors and known remote access vulnerabilities. A free security assessment from DCS takes 15 minutes.</p>
+    <a href="https://dcs-security-assessment.netlify.app" class="cta-button">Take the Free Security Assessment</a>
+    <div class="cta-contact">Questions? <a href="mailto:kwalton@datacollaborationservices.com">kwalton@datacollaborationservices.com</a> &nbsp;|&nbsp; <a href="tel:8009227994">800-922-7994</a></div>
+  </section>
+  <div class="prev-brief">
+    <div>
+      <div class="prev-brief-label">← Previous Brief</div>
+      <a href="https://dcs-cyber-briefs.netlify.app/newsletter-friedfrank.html" class="prev-brief-link">Issue 06 — Fried Frank Harris Shriver &amp; Jacobson Ransomware Attack</a>
+    </div>
+    <div class="prev-brief-arrow">←</div>
+  </div>
+  <footer>
+    <span class="footer-brand">Data Collaboration Services Consulting</span>
+    <div class="footer-tagline">Managed IT &amp; Cybersecurity for Law Firms and Professional Services</div>
+    <a href="mailto:kwalton@datacollaborationservices.com">kwalton@datacollaborationservices.com</a> &nbsp;·&nbsp; <a href="tel:8009227994">800-922-7994</a>
+    <div class="footer-divider"></div>
+    <a href="https://dcs-cyber-briefs.netlify.app" class="back-link">← Back to All Briefs</a>
+  </footer>
+</body>
+</html>
